@@ -11,7 +11,7 @@ export const EditableCell = ({
     children,
     ...restProps
 }) => {
-    const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+    const inputNode = inputType === 'number' ? <InputNumber /> : <Input className="delivery-input" />;
     return (
         <td {...restProps}>
             {editing ? (

@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Table, Popconfirm, Form, Button } from 'antd';
 import { EditableCell } from './EditableCell';
+import { deliveryActions } from '../../actions';
 
-const originData = [];
-
-for (let i = 0; i < 10; i++) {
-    originData.push({
-        key: i.toString(),
-        source_name: `A ${i}`,
-        target_name: `B ${i}`,
-        cost: 10 + i,
-    });
-}
-
-const DelivaryRoutesTable = () => {
+const DeliveryRoutesTable = () => {
+    const dispatch = useDispatch()
     const [form] = Form.useForm();
-    const [data, setData] = useState(originData);
     const [editingKey, setEditingKey] = useState('');
+    const data = useSelector((state) => state.delivery.data);
 
     const isEditing = record => record.key === editingKey;
 
@@ -33,7 +25,7 @@ const DelivaryRoutesTable = () => {
     const deleteRecord = key => {
         const newData = [...data];
         const updateData = newData.filter(item => key !== item.key);
-        setData(updateData);
+        dispatch(deliveryActions.setData(updateData))
     }
 
     const addRecord = () => {
@@ -44,7 +36,7 @@ const DelivaryRoutesTable = () => {
             target_name: "",
             cost: null
         });
-        setData(newData)
+        dispatch(deliveryActions.setData(newData))
     }
 
     const cancel = () => {
@@ -60,11 +52,11 @@ const DelivaryRoutesTable = () => {
             if (index > -1) {
                 const item = newData[index];
                 newData.splice(index, 1, { ...item, ...row });
-                setData(newData);
+                dispatch(deliveryActions.setData(newData))
                 setEditingKey('');
             } else {
                 newData.push(row);
-                setData(newData);
+                dispatch(deliveryActions.setData(newData))
                 setEditingKey('');
             }
         } catch (errInfo) {
@@ -86,7 +78,7 @@ const DelivaryRoutesTable = () => {
             editable: true,
         },
         {
-            title: 'Delivary Cost',
+            title: 'Delivery Cost',
             dataIndex: 'cost',
             width: '20%',
             editable: true,
@@ -171,4 +163,4 @@ const DelivaryRoutesTable = () => {
     );
 };
 
-export default DelivaryRoutesTable;
+export default DeliveryRoutesTable;

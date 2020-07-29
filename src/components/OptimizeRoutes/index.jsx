@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Card } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -10,64 +10,43 @@ const formItemLayoutWithOutLabel = {
 };
 
 const OptimizeRoutes = () => {
-    const onFinish = values => {
+    const initialValues = [
+        { name: 'source_name', value: '' },
+        { name: 'target_name', value: '' },
+    ]
+    const [values, setValues] = useState(initialValues);
+    let [count, setCount] = useState(0);
+
+    const onFinish = () => {
         console.log('Received values of form:', values);
     };
 
+    const handleChange = (key, value) => {
+        const newValues = [...values]
+        newValues.map((item) => {
+            if (item.name === key) {
+                item.value = value;
+            }
+        })
+        setValues(newValues);
+    }
+
+    const add = () => {
+        const newValues = [...values]
+        count = count + 1
+        newValues.push({ name: `target_name_${count}`, value: '' })
+        setCount(count)
+        setValues(newValues)
+    }
+
     return (
-        <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish}>
-            <Form.List name="names">
-                {(fields, { add, remove }) => {
-                    return (
-                        <div>
-                            <Card title="Optimize Routes" bordered={false}>
-                                <p>Routes : Cost</p>
-                                {fields.map((field, index) => (
-                                    <Form.Item
-                                        formItemLayoutWithOutLabel
-                                        required={false}
-                                        key={field.key}
-                                    >
-                                        <Form.Item
-                                            {...field}
-                                            validateTrigger={['onChange', 'onBlur']}
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    whitespace: true,
-                                                    message: 'Please insert route name!'
-                                                },
-                                            ]}
-                                            noStyle
-                                        >
-                                            <Input style={{ width: '60%', textTransform: 'uppercase' }} />
-                                        </Form.Item>
-                                        {fields.length > 0 ? (
-                                            <MinusCircleOutlined
-                                                className="dynamic-delete-button"
-                                                style={{ margin: '0 8px' }}
-                                                onClick={() => {
-                                                    remove(field.name);
-                                                }}
-                                            />
-                                        ) : null}
-                                    </Form.Item>
-                                ))}
-                                <Form.Item>
-                                    <Button
-                                        onClick={() => {
-                                            add();
-                                        }}
-                                    >
-                                        <PlusOutlined /> Add field
-                                    </Button>
-                                </Form.Item>
-                            </Card>
-                        </div>
-                    );
-                }}
-            </Form.List>
-        </Form>
+        <Card title="Optimize Routes">
+            {values.map((item) => (
+                <Input className="optimize-input" placeholder={item.name} name={item.name} onChange={(e) => { handleChange(e.target.name, e.target.value) }} />
+            ))}
+            <Button className="optimize-button" block type="primary" onClick={add}>Add</Button>
+            <Button className="optimize-button" block type="primary" onClick={onFinish}>Optimize</Button>
+        </Card>
     );
 };
 
