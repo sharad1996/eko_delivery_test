@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { Menu } from 'antd';
-import { history } from '../../helpers'
+import React from 'react';
 
 export const Header = () => {
-    const [current, setCurrent] = useState('home');
 
     return (
-        <Menu onClick={(e) => setCurrent(e.key)} selectedKeys={[current]} mode="horizontal">
-            <Menu.Item key="home" onClick={() => history.push('/')}>Home</Menu.Item>
-            <Menu.Item key="optimize" onClick={() => history.push('/optimize')}>Optimize</Menu.Item>
-        </Menu>
+        <nav className="nav">
+            <a className="nav-content" href="/">Home</a>
+            <a className="nav-content" href="/optimize">Optimize</a>
+        </nav>
     );
 }

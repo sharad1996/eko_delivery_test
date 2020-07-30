@@ -38,8 +38,31 @@
   text-transform: uppercase;
 }
 
+.optimize-routes {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.ant-table-cell {
+  text-transform: uppercase;
+}
+
 .optimize-button {
   width: 60%;
   margin-bottom: 10px;
   margin-top: 20px;
+}
+
+.nav {
+  background-color: #000;
+  height: 50px;
+  text-align: left;
+}
+
+.nav-content {
+  font-size: 16px;
+  margin-left: 40px;
+  font-weight: bold;
+  color: white;
 }

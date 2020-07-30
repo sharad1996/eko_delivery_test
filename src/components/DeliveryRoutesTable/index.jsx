@@ -12,37 +12,42 @@ const DeliveryRoutesTable = () => {
 
     const isEditing = record => record.key === editingKey;
 
+    // Edit functionality
     const edit = record => {
         form.setFieldsValue({
-            source_name: '',
-            target_name: '',
+            source: '',
+            target: '',
             cost: '',
             ...record,
         });
         setEditingKey(record.key);
     };
 
+    // Delete functionality
     const deleteRecord = key => {
         const newData = [...data];
         const updateData = newData.filter(item => key !== item.key);
         dispatch(deliveryActions.setData(updateData))
     }
 
+    // Add new record
     const addRecord = () => {
         const newData = [...data];
         newData.push({
             key: `${newData.length}`,
-            source_name: "",
-            target_name: "",
+            source: "",
+            target: "",
             cost: null
         });
         dispatch(deliveryActions.setData(newData))
     }
 
+    // Edit cancel
     const cancel = () => {
         setEditingKey('');
     };
 
+    // Edit save
     const save = async key => {
         try {
             const row = await form.validateFields();
@@ -67,13 +72,13 @@ const DeliveryRoutesTable = () => {
     const columns = [
         {
             title: 'Source Name',
-            dataIndex: 'source_name',
+            dataIndex: 'source',
             width: '20%',
             editable: true,
         },
         {
             title: 'Target Name',
-            dataIndex: 'target_name',
+            dataIndex: 'target',
             width: '20%',
             editable: true,
         },
@@ -92,7 +97,6 @@ const DeliveryRoutesTable = () => {
                 return editable ? (
                     <span>
                         <a
-                            href="javascript:;"
                             onClick={() => save(record.key)}
                             style={{
                                 marginRight: 8,

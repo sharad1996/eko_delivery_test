@@ -9,8 +9,8 @@ import { history } from './helpers';
 function App() {
   return (
     <div className="App">
-      <Header />
       <Router history={history}>
+        <Header />
         <Switch>
           <Route exact path="/" component={DeliveryRoutesTable} />
           <Route path="/optimize" component={OptimizeRoutes} />

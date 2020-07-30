@@ -1,6 +1,5 @@
-import { createBrowserHistory, createHashHistory } from 'history'
+import { createBrowserHistory } from 'history'
 
 const history = createBrowserHistory()
-const hashHistory = createBrowserHistory()
 
-export { history, hashHistory }
+export { history }
