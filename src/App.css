@@ -33,7 +33,8 @@
 }
 
 .optimize-input {
-  width: 60%;
+  width: 56%;
+  margin-right: 10px;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
@@ -42,6 +43,12 @@
   font-size: 20px;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+.delete-image {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
 .ant-table-cell {

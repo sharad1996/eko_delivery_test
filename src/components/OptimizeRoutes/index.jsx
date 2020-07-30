@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Input, Button, Card } from 'antd';
 import { optimizeRouteCosts } from '../../utils';
+import Delete from '../../images/delete.svg';
 
 const OptimizeRoutes = () => {
     const initialValues = [
@@ -30,12 +31,19 @@ const OptimizeRoutes = () => {
     }
 
     // Add new input box
-    const add = () => {
+    const addInput = () => {
         const newValues = [...values]
         count = count + 1
         newValues.push({ name: `target_${count}`, value: '' })
         setCount(count)
         setValues(newValues)
+    }
+
+    // Delete input box
+    const deleteInput = (selectedIndex) => {
+        const newValues = [...values]
+        const updatedValues = newValues.filter((item, index) => index !== selectedIndex)
+        setValues(updatedValues)
     }
 
     return (
@@ -49,9 +57,12 @@ const OptimizeRoutes = () => {
             </p>
             {result !== '' && <p className="optimize-routes">Total Cost : {result}</p>}
             {values.map((item, index) => (
-                <Input key={`input-${index}`} className="optimize-input" placeholder={item.name} name={item.name} onChange={(e) => { handleChange(e.target.name, e.target.value) }} />
+                <>
+                    <Input key={`input-${index}`} className="optimize-input" placeholder={item.name} name={item.name} onChange={(e) => { handleChange(e.target.name, e.target.value) }} />
+                    <img className="delete-image" onClick={() => deleteInput(index)} src={Delete} />
+                </>
             ))}
-            <Button className="optimize-button" block type="primary" onClick={add}>Add</Button>
+            <Button className="optimize-button" block type="primary" onClick={addInput}>Add</Button>
             <Button className="optimize-button" block type="primary" onClick={onSubmit}>Optimize</Button>
         </Card>
     );

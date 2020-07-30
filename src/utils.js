@@ -34,6 +34,7 @@ export const optimizeRouteCosts = (values, data) => {
 }
 
 // Calculate possible routes
-export const calculatePossibleRoutes = () => {
-
+export const calculatePossibleRoutes = (values, data) => {
+    const uniqueValues = [...new Set(values.map(item => item.value))];
+    console.log('uinque-values', uniqueValues);
 }
